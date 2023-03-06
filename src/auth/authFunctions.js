@@ -1,24 +1,14 @@
 const jwt = require('jsonwebtoken');
-const { UserService } = require('../services');
 
 const secret = process.env.JWT_SECRET;
 
-module.exports = async (req, res, next) => {
-    const token = req.header('Authorization');
+const JWT_CONFIG = {
+  algorithm: 'HS256',
+  expiresIn: '15min',
+};
 
-    if (!token) {
-        return res.status(401).json({ error: 'Token not found' });
-      }
-    try {
-        const decoded = jwt.verify(token, secret);
-        const user = await UserService.getByEmail(decoded.data.email);
+const createToken = (data) => jwt.sign({ data }, secret, JWT_CONFIG);
 
-        if (!user) {
-            return res.status(401).json({ message: 'Error looking up token user' });
-          }
-        req.user = user;
-        next();
-    } catch (err) {
-        return res.status(401).json({ message: err.message });
-      }
-    };
+const verifyToken = (token) => jwt.verify(token, secret);
+
+module.exports = { createToken, verifyToken };
