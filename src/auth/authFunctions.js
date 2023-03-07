@@ -4,7 +4,7 @@ const secret = process.env.JWT_SECRET;
 
 const JWT_CONFIG = {
   algorithm: 'HS256',
-  expiresIn: '15min',
+  expiresIn: '7d',
 };
 
 const createToken = (email) => jwt.sign({ email }, secret, JWT_CONFIG);
