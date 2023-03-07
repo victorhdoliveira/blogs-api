@@ -17,4 +17,17 @@ const insertUser = async (req, res) => {
       }
 };
 
-module.exports = { insertUser };
+const getUsers = async (req, res) => {
+  try {
+    const users = await userService.getAllUsers();
+    if (!users) throw Error;
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({
+      message: 'Error searching users in database',
+      error: err.message,
+    });
+  }
+};
+
+module.exports = { insertUser, getUsers };
