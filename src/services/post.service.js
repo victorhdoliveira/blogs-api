@@ -26,7 +26,10 @@ const getByPostId = (id) => BlogPost.findByPk(id, {
     ],
 });
 
+const updatePost = async (id, dataUpdated) => BlogPost.update(dataUpdated, { where: { id } });
+
 module.exports = {
     getAllPosts,
     getByPostId,
+    updatePost,
 };
