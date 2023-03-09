@@ -1,5 +1,4 @@
 const { verifyToken } = require('../auth/authFunctions');
-// const { userService } = require('../services');
 
 const validateToken = async (req, res, next) => {
   try {
