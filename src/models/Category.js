@@ -12,7 +12,6 @@
     },
     {
       tableName: 'categories',
-      underscored: true,
       timestamps: false,
     },
     );

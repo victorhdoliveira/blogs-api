@@ -11,18 +11,19 @@
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true  },
       title: DataTypes.STRING,
       content: DataTypes.STRING,
-      user_id: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
       published: DataTypes.DATE,
       updated: DataTypes.DATE,
     },
     {
-      underscored: false,
+      underscored: true,
       timestamps: false,
+      tableName: 'blog_posts',
     },
   );
   BlogPostModel.associate = (models) => {
     BlogPostModel.belongsTo(models.User, {
-      foreignKey: 'idUser',
+      foreignKey: 'userId',
       as: 'user',
     });
   };

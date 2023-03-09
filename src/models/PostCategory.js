@@ -19,6 +19,7 @@
     {
       timestamps: false,
       underscored: true,
+      tableName: 'posts_categories',
     },
   );
   PostCategoriesModel.associate = ({ Category, BlogPost }) => {
@@ -26,13 +27,13 @@
       foreignKey: 'postId',
       otherKey: 'categoryId',
       through: PostCategoriesModel,
-      as: 'blogPosts',
+      as: 'categories',
     });
     Category.belongsToMany(BlogPost, {
       foreignKey: 'categoryId',
       otherKey: 'postId',
       through: PostCategoriesModel,
-      as: 'categories',
+      as: 'postId',
     });
   };
   return PostCategoriesModel;
