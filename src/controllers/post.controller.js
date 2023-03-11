@@ -1,4 +1,22 @@
 const { postService } = require('../services');
+const { hasCategory, generatePostCategories } = require('../utils/categoryFuncs');
+
+const insertPost = async (req, res) => {
+    try {
+      const { title, content, categoryIds } = req.body;
+      const { payload: { email: { dataValues: { id } } } } = req.user;
+      const exists = await hasCategory(categoryIds); 
+      if (!exists) return res.status(400).json({ message: 'one or more "categoryIds" not found' });
+      const blogPost = await postService.createPost(title, content, id);
+      generatePostCategories(blogPost, categoryIds);
+      res.status(201).json(blogPost);
+    } catch (err) {
+      return res.status(500).json({
+        message: 'Error inserting post in database',
+        error: err.message,
+      });
+    }
+  };
 
 const getPosts = async (req, res) => {
     try {
@@ -37,4 +55,5 @@ module.exports = {
     getPosts,
     getPostId,
     updatePostById,
+    insertPost,
 };

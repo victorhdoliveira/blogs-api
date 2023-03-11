@@ -21,6 +21,15 @@ const postValidation = async (req, res, next) => {
   next();
 };
 
+const bodyDataValidation = (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+  if (!title || !content || !categoryIds) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  } 
+  return next();
+};
+
 module.exports = {
    postValidation,
+   bodyDataValidation,
 };

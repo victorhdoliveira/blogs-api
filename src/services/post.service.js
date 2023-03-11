@@ -1,4 +1,8 @@
-const { BlogPost, User, Category } = require('../models');
+const { BlogPost, User, Category, PostCategory } = require('../models');
+
+const createPost = async (title, content, userId) => BlogPost.create({ userId, title, content });
+
+const createPostCategories = async (postCategories) => PostCategory.bulkCreate(postCategories);
 
 const getAllPosts = () => BlogPost.findAll({
     include: [
@@ -32,4 +36,6 @@ module.exports = {
     getAllPosts,
     getByPostId,
     updatePost,
+    createPost,
+    createPostCategories,
 };
