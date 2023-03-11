@@ -4,6 +4,10 @@ const createPost = async (title, content, userId) => BlogPost.create({ userId, t
 
 const createPostCategories = async (postCategories) => PostCategory.bulkCreate(postCategories);
 
+const updatePost = async (id, dataUpdated) => BlogPost.update(dataUpdated, { where: { id } });
+
+const destroyByPostId = async (id) => BlogPost.destroy({ where: { id } });
+
 const getAllPosts = () => BlogPost.findAll({
     include: [
         { model: User, 
@@ -30,12 +34,11 @@ const getByPostId = (id) => BlogPost.findByPk(id, {
     ],
 });
 
-const updatePost = async (id, dataUpdated) => BlogPost.update(dataUpdated, { where: { id } });
-
 module.exports = {
     getAllPosts,
     getByPostId,
     updatePost,
     createPost,
     createPostCategories,
+    destroyByPostId,
 };

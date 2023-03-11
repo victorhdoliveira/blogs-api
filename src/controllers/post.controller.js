@@ -43,12 +43,18 @@ const getPostId = async (req, res) => {
 };
 
 const updatePostById = async (req, res) => {
-        const { id } = req.params;
-        const { title, content } = req.body;
+    const { id } = req.params;
+    const { title, content } = req.body;
 
-        await postService.updatePost(id, { title, content });
-        const uptadedPost = await postService.getByPostId(id);
-        res.status(200).json(uptadedPost);
+    await postService.updatePost(id, { title, content });
+    const uptadedPost = await postService.getByPostId(id);
+    res.status(200).json(uptadedPost);
+};
+
+const deletePostById = async (req, res) => {
+    const { id } = req.params;
+    const del = await postService.destroyByPostId(id);
+    res.status(204).json(del);
 };
 
 module.exports = { 
@@ -56,4 +62,5 @@ module.exports = {
     getPostId,
     updatePostById,
     insertPost,
+    deletePostById,
 };
