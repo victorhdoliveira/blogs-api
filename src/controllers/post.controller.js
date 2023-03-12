@@ -37,24 +37,33 @@ const getPostId = async (req, res) => {
         const post = await postService.getByPostId(id);
         if (!post) throw Error;
         res.status(200).json(post);
-      } catch (err) {
+    } catch (err) {
         res.status(404).json({ message: 'Post does not exist' });
     }
 };
 
 const updatePostById = async (req, res) => {
-    const { id } = req.params;
-    const { title, content } = req.body;
-
-    await postService.updatePost(id, { title, content });
-    const uptadedPost = await postService.getByPostId(id);
-    res.status(200).json(uptadedPost);
+    try {
+        const { id } = req.params;
+        const { title, content } = req.body;
+        await postService.updatePost(id, { title, content });
+        const uptadedPost = await postService.getByPostId(id);
+        if (!uptadedPost) throw Error;
+        res.status(200).json(uptadedPost);
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating post in database' });
+    }
 };
 
 const deletePostById = async (req, res) => {
-    const { id } = req.params;
-    const del = await postService.destroyByPostId(id);
-    res.status(204).json(del);
+    try {
+        const { id } = req.params;
+        const del = await postService.destroyByPostId(id);
+        if (!del) throw Error;
+        res.status(204).end();
+    } catch (err) {
+        res.status(500).json({ message: 'Error detecting post in database' });
+    }
 };
 
 module.exports = { 

@@ -1,4 +1,4 @@
-const { loginService } = require('../services');
+const { loginService, userService } = require('../services');
 
 const userValidations = async (req, res, next) => {
     const { displayName, email, password } = req.body;
@@ -22,6 +22,17 @@ const userValidations = async (req, res, next) => {
     return next();
   };
 
+const userIdValidation = async (req, res, next) => {
+  const { payload: { email: { dataValues: { id } } } } = req.user;
+  const user = await userService.getByUserId(id);
+
+  if (!user) {
+    return res.status(404).json({ message: 'User does not match' });
+  }
+  return next();
+};
+
   module.exports = {
     userValidations,
+    userIdValidation,
   };

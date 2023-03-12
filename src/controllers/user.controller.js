@@ -41,8 +41,22 @@ const getUserId = async (req, res) => {
 }
 };
 
+const deleteByLoginId = async (req, res) => {
+  try {
+    const { payload: { email: { dataValues: { id } } } } = req.user;
+    // const user = await userService.getByUserId(id);
+    // if (!user) return res.status(404).json({ message: 'User does not exist' });
+    const del = await userService.destroyByLoginId(id);
+    if (!del) throw Error;
+    res.status(204).end();
+} catch (err) {
+    res.status(500).json({ message: 'Error detecting post in database' });
+  }
+};
+
 module.exports = { 
   insertUser,
   getUsers,
   getUserId, 
+  deleteByLoginId,
 };
