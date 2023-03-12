@@ -22,7 +22,7 @@ const userValidations = async (req, res, next) => {
     return next();
   };
 
-const userIdValidation = async (req, res, next) => {
+const myUserIdValidation = async (req, res, next) => {
   const { payload: { email: { dataValues: { id } } } } = req.user;
   const user = await userService.getByUserId(id);
 
@@ -34,5 +34,5 @@ const userIdValidation = async (req, res, next) => {
 
   module.exports = {
     userValidations,
-    userIdValidation,
+    myUserIdValidation,
   };

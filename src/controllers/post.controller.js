@@ -66,10 +66,23 @@ const deletePostById = async (req, res) => {
     }
 };
 
+const searchPosts = async (req, res) => {
+    try {
+    const { q } = req.query;
+    const searchTerm = q.toLowerCase();
+    const postsWithSearch = await postService.getSearchPosts(searchTerm);
+    if (!postsWithSearch) throw Error;
+    res.status(200).json(postsWithSearch);
+  } catch (err) {
+    return res.status(500).json({ message: 'Error searching title or content in database' });
+  }
+};
+
 module.exports = { 
     getPosts,
     getPostId,
     updatePostById,
     insertPost,
     deletePostById,
+    searchPosts,
 };

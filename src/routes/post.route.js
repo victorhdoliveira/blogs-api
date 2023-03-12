@@ -7,6 +7,7 @@ const { postValidation, bodyDataValidation,
 const router = express.Router();
 
 router.use(validateToken);
+router.get('/search', postController.searchPosts);
 router.get('/', postController.getPosts);
 router.get('/:id', postController.getPostId);
 router.put('/:id', postValidation, postController.updatePostById);
