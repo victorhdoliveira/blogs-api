@@ -1,4 +1,5 @@
 const { postService } = require('../services');
+const { hasCategory } = require('../utils/categoryFuncs');
 
 const postValidation = async (req, res, next) => {
     const { title, content } = req.body;
@@ -21,10 +22,23 @@ const postValidation = async (req, res, next) => {
   return next();
 };
 
-const bodyDataValidation = (req, res, next) => {
+const postIdValidation = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await postService.getByPostId(id);
+  if (!post) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  } 
+  return next();
+};
+
+const postDataValidation = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
+  const exists = await hasCategory(categoryIds);
   if (!title || !content || !categoryIds) {
     return res.status(400).json({ message: 'Some required fields are missing' });
+  } 
+  if (!exists) {
+    return res.status(400).json({ message: 'one or more "categoryIds" not found' });
   } 
   return next();
 };
@@ -46,6 +60,7 @@ const deleteValidation = async (req, res, next) => {
 
 module.exports = {
    postValidation,
-   bodyDataValidation,
+   postIdValidation,
+   postDataValidation,
    deleteValidation,
 };

@@ -20,7 +20,6 @@ const insertUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
-    if (!users) throw Error;
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({
@@ -34,7 +33,6 @@ const getUserId = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await userService.getByUserId(id);
-    if (!user) throw Error;
     res.status(200).json(user);
   } catch (err) {
     res.status(404).json({ message: 'User does not exist' });
@@ -44,10 +42,7 @@ const getUserId = async (req, res) => {
 const deleteByLoginId = async (req, res) => {
   try {
     const { payload: { email: { dataValues: { id } } } } = req.user;
-    // const user = await userService.getByUserId(id);
-    // if (!user) return res.status(404).json({ message: 'User does not exist' });
-    const del = await userService.destroyByLoginId(id);
-    if (!del) throw Error;
+    await userService.destroyByLoginId(id);
     res.status(204).end();
 } catch (err) {
     res.status(500).json({ message: 'Error detecting post in database' });

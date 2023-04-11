@@ -21,18 +21,29 @@ const userValidations = async (req, res, next) => {
     }
     return next();
   };
+  
+  const searchUserValidations = async (req, res, next) => {
+    const { id } = req.params;
+    const user = await userService.getByUserId(id);
 
-const myUserIdValidation = async (req, res, next) => {
-  const { payload: { email: { dataValues: { id } } } } = req.user;
-  const user = await userService.getByUserId(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User does not exist' });
+    }
+    return next();
+  };
 
-  if (!user) {
-    return res.status(404).json({ message: 'User does not match' });
-  }
-  return next();
+  const myUserIdValidation = async (req, res, next) => {
+    const { payload: { email: { dataValues: { id } } } } = req.user;
+    const user = await userService.getByUserId(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User does not match' });
+    }
+    return next();
 };
 
   module.exports = {
     userValidations,
     myUserIdValidation,
+    searchUserValidations,
   };
