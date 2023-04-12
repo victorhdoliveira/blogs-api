@@ -1,13 +1,57 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+## Projeto Blogs API
+Nesse projeto, foi criada uma API e um banco de dados para produzir conteúdo para um blog. Para isso, uma aplicação em Node.js foi utilizada com o pacote sequelize para realizar operações de criação, leitura, atualização e deleção (CRUD) de posts. No total, foram desenvolvidos 14 endpoints que seguem os princípios do REST e que estão conectados ao banco de dados.
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+## Tecnologias
+* Node.js
+* Sequelize
+* JSON Web Token(JWT)
+* MySQL
+* Docker
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+## Instalando Dependências
+Clone o repositório do GitHub
+
+```javascript
+ git clone git@github.com:victorhdoliveira/blogs-api.git
+```
+
+### Com Docker
+> Backend
+
+1. Rode os serviços node e db com o seguinte comando: 
+```bash
+docker-compose up -d
+``` 
+
+2. Abra o terminal interativo do container: 
+```bash
+docker exec -it blogs_api bash
+``` 
+
+3. Instale as dependências dentro do container: 
+```bash
+npm install
+``` 
+4. Execute a aplicação: 
+```bash
+npm run debug
+``` 
+> Testes
+
+4. Dentro do terminal do container:
+```bash
+npm test
+``` 
+
+:warning: Atenção: O git dentro do container não vem configurado com suas credenciais;
+
+### Sem Docker
+
+Instale as dependências
+```bash
+npm install
+``` 
+Execute a aplicação
+```bash
+npm run debug
+``` 
